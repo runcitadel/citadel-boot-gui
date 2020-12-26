@@ -71,7 +71,7 @@ MainWidget::MainWidget()
 void MainWidget::paintGL()
 {
     // Get logo
-    QFile logoFile(":/umbrel.svg");
+    QFile logoFile(":/umbrel-logo.svg");
     QFile QRLogoFile(":/umbrel-qr-icon.svg");
     logoFile.open(QIODevice::ReadOnly);
     QRLogoFile.open(QIODevice::ReadOnly);

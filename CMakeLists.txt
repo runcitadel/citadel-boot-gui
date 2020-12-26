@@ -1,4 +1,4 @@
-project(umbrel-details)
+project(umbrel-gui)
 cmake_minimum_required(VERSION 3.13)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -24,9 +24,9 @@ set(SRCS
     qrcode/QrCode.cpp
 )
 
-QT5_ADD_RESOURCES(RSCS umbrel-details.qrc)
+QT5_ADD_RESOURCES(RSCS umbrel-gui.qrc)
 
 QT5_WRAP_CPP(MOCS MainWidget.h)
 
-add_executable(umbrel-details ${SRCS} ${RSCS} ${MOCS})
-target_link_libraries(umbrel-details Qt5::Core Qt5::Gui Qt5::Svg Qt5::Network Qt5::WebEngine Qt5::WebEngineWidgets)
+add_executable(umbrel-gui ${SRCS} ${RSCS} ${MOCS})
+target_link_libraries(umbrel-gui Qt5::Core Qt5::Gui Qt5::Svg Qt5::Network Qt5::WebEngine Qt5::WebEngineWidgets)

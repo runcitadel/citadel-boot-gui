@@ -1,6 +1,6 @@
 <RCC>
     <qresource>
-        <file>umbrel.svg</file>
+        <file>umbrel-logo.svg</file>
         <file>umbrel-qr-icon.svg</file>
     </qresource>
 </RCC>
