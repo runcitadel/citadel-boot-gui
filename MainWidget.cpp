@@ -58,7 +58,6 @@
 #include <QResizeEvent>
 #include <QOpenGLWidget>
 #include <QPainter>
-#include <QXmlStreamReader>
 #include <QSvgRenderer>
 #include <QHostAddress>
 #include <QNetworkInterface>
@@ -71,15 +70,15 @@ MainWidget::MainWidget()
 void MainWidget::paintGL()
 {
     // Get logo
-    QFile logoFile(":/umbrel-logo.svg");
-    QFile QRLogoFile(":/umbrel-qr-icon.svg");
+    QFile logoFile(":/citadel-logo.svg");
+    QFile QRLogoFile(":/citadel-qr-icon.svg");
     logoFile.open(QIODevice::ReadOnly);
     QRLogoFile.open(QIODevice::ReadOnly);
     QString logoString = QTextStream(&logoFile).readAll();
     QString qrLogoString = QTextStream(&QRLogoFile).readAll();
 
     // Get tor host name
-    QFile torHostNamelogoFile("/home/umbrel/umbrel/tor/data/web/hostname");
+    QFile torHostNamelogoFile("/home/citadel/citadel/tor/data/web/hostname");
     torHostNamelogoFile.open(QIODevice::ReadOnly);
     QTextStream hostNameTextStream(&torHostNamelogoFile);
     QString torHostName = "http://" + hostNameTextStream.readAll();
@@ -95,8 +94,8 @@ void MainWidget::paintGL()
 
     // Prepare images
     QImage backgroundColorImage = QImage(this->geometry().size(), QImage::Format_RGB32);
-    QImage backgroundImage(500, 500, QImage::Format_ARGB32);
-    QImage qrCenterImage(136, 136, QImage::Format_ARGB32);
+    QImage backgroundImage(this->geometry().width() / 5, this->geometry().width() / 5, QImage::Format_ARGB32);
+    QImage qrCenterImage(this->geometry().width() / 13, this->geometry().width() / 13, QImage::Format_ARGB32);
     QImage logoImage(68, 76.5, QImage::Format_ARGB32);
     backgroundColorImage.fill(QColor(BACKGKROUND_COLOR));
     backgroundImage.fill(Qt::white);
@@ -107,11 +106,10 @@ void MainWidget::paintGL()
     QSvgRenderer *renderer = getQrCode(&torHostName);
     renderer->render(&painter);
     int deltaX = this->geometry().width() - backgroundImage.width();
-    int deltaY = this->geometry().height() - backgroundImage.height() + 260;
-    int deltaX2 = backgroundImage.width() - 136;
-    int deltaY2 = backgroundImage.height() - 136;
-    QXmlStreamReader *reader = new QXmlStreamReader(qrLogoString);
-    QSvgRenderer *renderer1 = new QSvgRenderer(reader);
+    int deltaY = this->geometry().height() - backgroundImage.height() + this->geometry().width() / 9 + 50;
+    int deltaX2 = backgroundImage.width() - (this->geometry().width() / 13);
+    int deltaY2 = backgroundImage.height() - (this->geometry().width() / 13);
+    QSvgRenderer *renderer1 = new QSvgRenderer(qrLogoString.toUtf8());
     renderer1->render(&QRLogoPainter);
 
     // Draw background with QR code
@@ -121,32 +119,32 @@ void MainWidget::paintGL()
     textPainter.drawImage(backgroundImage.rect(), backgroundImage);
     textPainter.translate(deltaX2 / 2, deltaY2 / 2);
     textPainter.drawImage(qrCenterImage.rect(), qrCenterImage);
-    textPainter.translate(-(deltaX / 2), -(deltaY / 2));
-    textPainter.translate(-(deltaX2 / 2), -(deltaY2 / 2));
+    textPainter.resetTransform();
+    textPainter.translate(0, 10);
     textPainter.setPen(QPen(QColor(TEXT_COLOR)));
-    textPainter.setFont(QFont(DEFAULT_FONT, 50, QFont::Bold));
-    textPainter.translate(0, 20 + deltaY / 2 - 300);
+    textPainter.setFont(QFont(DEFAULT_FONT, this->geometry().height() / 10, QFont::Bold));
     textPainter.drawText(this->geometry(), Qt::AlignHCenter, "Welcome!");
-    textPainter.translate(0, 90);
-    textPainter.setFont(QFont(DEFAULT_FONT, 20, QFont::Bold));
-    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "Your Umbrel is up and running at:");
-    textPainter.translate(0, 40);
-    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "http://umbrel.local");
-    textPainter.translate(0, 40);
+    textPainter.translate(0, this->geometry().height() / 5);
+    textPainter.setFont(QFont(DEFAULT_FONT, std::min(20, this->geometry().height() / 30), QFont::Bold));
+    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "Your Citadel is up and running at:");
+    textPainter.translate(0, std::min(40, this->geometry().height() / 15));
+    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "http://citadel.local");
+    textPainter.translate(0, std::min(40, this->geometry().height() / 15));
     textPainter.drawText(this->geometry(), Qt::AlignHCenter, "http://" + ipAddress);
-    textPainter.translate(0, 40);
+    textPainter.translate(0, std::min(40, this->geometry().height() / 15));
     textPainter.drawText(this->geometry(), Qt::AlignHCenter, torHostName);
-    textPainter.translate(0, 600);
-    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "Thank you for using Umbrel!");
+    textPainter.resetTransform();
+    textPainter.translate(0, this->geometry().height() - std::min(100, this->geometry().height() / 7));
+    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "Thank you for using Citadel!");
 
-    // Draw Umbrel logo in the bottom left corner
+    // Draw Citadel logo in the bottom left corner
     QPainter logoPainter(&logoImage);
-    QXmlStreamReader *reader1 = new QXmlStreamReader(logoString);
-    QSvgRenderer *renderer2 = new QSvgRenderer(reader1);
+    QSvgRenderer *renderer2 = new QSvgRenderer(logoString.toUtf8());
     renderer2->render(&logoPainter);
-    int deltaX3 = this->geometry().width() - logoImage.width() - 15;
-    int deltaY3 = this->geometry().height() - logoImage.height() - 15;
-    textPainter.translate(deltaX3, -(20 + deltaY / 2 - 300) - 600 - 40 * 3 - 90 + deltaY3);
+    int logoImageDeltaX = this->geometry().width() - logoImage.width() - 15;
+    int logoImageDeltaY = this->geometry().height() - logoImage.height() - 15;
+    textPainter.resetTransform();
+    textPainter.translate(logoImageDeltaX, logoImageDeltaY);
     textPainter.drawImage(logoImage.rect(), logoImage);
     textPainter.end();
 }
@@ -154,7 +152,6 @@ void MainWidget::paintGL()
 QSvgRenderer *MainWidget::getQrCode(QString *address) {
     qrcodegen::QrCode qr0 = qrcodegen::QrCode::encodeText(address->toStdString().c_str(), qrcodegen::QrCode::Ecc::HIGH);
     QString svg = QString::fromStdString(qr0.toSvgString(4));
-    QXmlStreamReader *reader = new QXmlStreamReader(svg);
-    QSvgRenderer *renderer = new QSvgRenderer(reader);
+    QSvgRenderer *renderer = new QSvgRenderer(svg.toUtf8());
     return renderer;
 }

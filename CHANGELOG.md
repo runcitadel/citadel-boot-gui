@@ -2,7 +2,15 @@
 
 ## Beta versions
 
-### v0.99
+### v1.0.0-beta.1
+
+- Remove Umbrel logo, rename to Citadel
+- Responsive layout to work with smaller screens
+- Performance improvements when switching between views
+- Code cleanups
+- Reduce memory usage
+
+### v0.9.9
 
 - Remove restriction for eglfs
 - Code improvements

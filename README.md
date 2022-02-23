@@ -1,8 +1,9 @@
-# GUI for Umbrel details
+# Citadel boot UI
 
 ![Example](example.png)
 
-A gui version of umbrel-details. Only works on Raspberry Pis with Umbrel OS installed.
+A new user interface for Citadel when connected to a screen.
+
 
 ## Required packages to build this:
 
@@ -21,11 +22,7 @@ make -j$(nproc)
 
 ## Running
 
-To run this on an Raspberry Pi with Umbrel OS, run
+To run this on an Raspberry Pi with Citadel OS, run
 ```
-./umbrel-details
+./citadel-gui
 ```
-
-## License
-
-The umbrel logo is Copyright 2020 Umbrel and is licensed under the terms and conditions of the MIT License.

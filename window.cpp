@@ -57,6 +57,7 @@
 #include <QWidget>
 #include <QWebEngineView>
 #include <QVBoxLayout>
+#include <QStackedWidget>
 #include <QPushButton>
 
 Window::Window()
@@ -65,39 +66,29 @@ Window::Window()
 }
 
 void Window::handleButton() {
-    layout()->removeItem(layout()->itemAt(0));
-    layout()->removeItem(layout()->itemAt(0));
-    layout()->removeItem(layout()->itemAt(0));
-    QWebEngineView *view = new QWebEngineView(this);
-    view->setUrl(QUrl("http://localhost"));
-    view->show();
-    QPushButton *QRButton = new QPushButton("Show QR code");
-    QRButton->setMinimumHeight(75);
-    connect(QRButton, &QPushButton::clicked, this, &Window::reinit);
-    layout()->addWidget(view);
-    layout()->addWidget(QRButton);
+    this->m_layout->currentIndex() == 0 ? this->m_layout->setCurrentIndex(1) : this->m_layout->setCurrentIndex(0);
+    this->m_button->setText(this->m_layout->currentIndex() == 0 ? "Open the Citadel dashboard" : "Show QR Code");
+    this->m_webView->setUrl(QUrl("http://localhost"));
 }
 
-void Window::reinit() {
-    layout()->removeItem(layout()->itemAt(0));
-    layout()->removeItem(layout()->itemAt(0));
-    layout()->removeItem(layout()->itemAt(0));
-    MainWidget *mainWidget = new MainWidget();
-    QPushButton *button = new QPushButton("Open the Umbrel dashboard");
-    button->setMinimumHeight(75);
-    layout()->addWidget(mainWidget);
-    layout()->addWidget(button);
-    connect(button, &QPushButton::clicked, this, &Window::handleButton);
-}
 
 void Window::init() {
     QVBoxLayout *layout = new QVBoxLayout;
+    QStackedWidget *stackedWidget = new QStackedWidget;
     MainWidget *mainWidget = new MainWidget();
+    QWebEngineView *webView = new QWebEngineView();
+    webView->setUrl(QUrl("http://localhost"));
     layout->setSpacing(0);
     layout->setMargin(0);
-    QPushButton *button = new QPushButton("Open the Umbrel dashboard");
-    button->setMinimumHeight(75);
-    layout->addWidget(mainWidget);
+    QPushButton *button = new QPushButton("Open the Citadel dashboard");
+    this->m_button = button;
+    this->m_layout = stackedWidget;
+    this->m_webView = webView;
+    button->setMinimumHeight(50);
+    button->setFlat(true);
+    stackedWidget->addWidget(mainWidget);
+    stackedWidget->addWidget(webView);
+    layout->addWidget(stackedWidget);
     layout->addWidget(button);
     setLayout(layout);
     connect(button, &QPushButton::clicked, this, &Window::handleButton);

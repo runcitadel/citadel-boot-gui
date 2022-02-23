@@ -1,0 +1,6 @@
+<RCC>
+    <qresource>
+        <file>citadel-logo.svg</file>
+        <file>citadel-qr-icon.svg</file>
+    </qresource>
+</RCC>

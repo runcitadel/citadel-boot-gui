@@ -52,6 +52,9 @@
 #define WINDOW_H
 
 #include <QWidget>
+#include <QPushButton>
+#include <QStackedWidget>
+#include <QWebEngineView>
 
 QT_BEGIN_NAMESPACE
 
@@ -62,7 +65,12 @@ public:
 
     void init();
     void reinit();
-    
+
+private:
+    QPushButton *m_button;
+    QStackedWidget *m_layout;
+    QWebEngineView *m_webView;
+
 public slots:
     void handleButton();
 };
