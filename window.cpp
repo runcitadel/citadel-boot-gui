@@ -84,7 +84,7 @@ void Window::init() {
     this->m_button = button;
     this->m_layout = stackedWidget;
     this->m_webView = webView;
-    button->setMinimumHeight(50);
+    button->setMinimumHeight(25);
     button->setFlat(true);
     stackedWidget->addWidget(mainWidget);
     stackedWidget->addWidget(webView);
