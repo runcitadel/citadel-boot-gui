@@ -67,7 +67,7 @@ Window::Window()
 
 void Window::handleButton() {
     this->m_layout->currentIndex() == 0 ? this->m_layout->setCurrentIndex(1) : this->m_layout->setCurrentIndex(0);
-    this->m_button->setText(this->m_layout->currentIndex() == 0 ? "Open the Citadel dashboard" : "Show QR Code");
+    this->m_button->setText(this->m_layout->currentIndex() == 0 ? "Open the Umbrel dashboard" : "Show QR Code");
     this->m_webView->setUrl(QUrl("http://localhost"));
 }
 
@@ -80,7 +80,7 @@ void Window::init() {
     webView->setUrl(QUrl("http://localhost"));
     layout->setSpacing(0);
     layout->setMargin(0);
-    QPushButton *button = new QPushButton("Open the Citadel dashboard");
+    QPushButton *button = new QPushButton("Open the Umbrel dashboard");
     this->m_button = button;
     this->m_layout = stackedWidget;
     this->m_webView = webView;

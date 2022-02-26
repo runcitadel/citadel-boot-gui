@@ -78,7 +78,7 @@ void MainWidget::paintGL()
     QString qrLogoString = QTextStream(&QRLogoFile).readAll();
 
     // Get tor host name
-    QFile torHostNamelogoFile("/home/citadel/citadel/tor/data/web/hostname");
+    QFile torHostNamelogoFile("/home/umbrel/umbrel/tor/data/web/hostname");
     torHostNamelogoFile.open(QIODevice::ReadOnly);
     QTextStream hostNameTextStream(&torHostNamelogoFile);
     QString torHostName = "http://" + hostNameTextStream.readAll();
@@ -126,16 +126,16 @@ void MainWidget::paintGL()
     textPainter.drawText(this->geometry(), Qt::AlignHCenter, "Welcome!");
     textPainter.translate(0, this->geometry().height() / 5);
     textPainter.setFont(QFont(DEFAULT_FONT, std::min(20, this->geometry().height() / 30), QFont::Bold));
-    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "Your Citadel is up and running at:");
+    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "Your Umbrel is up and running at:");
     textPainter.translate(0, std::min(40, this->geometry().height() / 15));
-    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "http://citadel.local");
+    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "http://umbrel.local");
     textPainter.translate(0, std::min(40, this->geometry().height() / 15));
     textPainter.drawText(this->geometry(), Qt::AlignHCenter, "http://" + ipAddress);
     textPainter.translate(0, std::min(40, this->geometry().height() / 15));
     textPainter.drawText(this->geometry(), Qt::AlignHCenter, torHostName);
     textPainter.resetTransform();
     textPainter.translate(0, this->geometry().height() - std::min(100, this->geometry().height() / 7));
-    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "Thank you for using Citadel!");
+    textPainter.drawText(this->geometry(), Qt::AlignHCenter, "(But you should be using Citadel ;-))");
 
     // Draw Citadel logo in the bottom left corner
     QPainter logoPainter(&logoImage);
