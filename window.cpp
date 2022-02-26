@@ -68,7 +68,7 @@ Window::Window()
 void Window::handleButton() {
     this->m_layout->currentIndex() == 0 ? this->m_layout->setCurrentIndex(1) : this->m_layout->setCurrentIndex(0);
     this->m_button->setText(this->m_layout->currentIndex() == 0 ? "Open the Umbrel dashboard" : "Show QR Code");
-    this->m_webView->setUrl(QUrl("http://localhost"));
+    this->m_webView->setUrl(QUrl("http://umbrel.local"));
 }
 
 
@@ -77,7 +77,7 @@ void Window::init() {
     QStackedWidget *stackedWidget = new QStackedWidget;
     MainWidget *mainWidget = new MainWidget();
     QWebEngineView *webView = new QWebEngineView();
-    webView->setUrl(QUrl("http://localhost"));
+    webView->setUrl(QUrl("http://umbrel.local"));
     layout->setSpacing(0);
     layout->setMargin(0);
     QPushButton *button = new QPushButton("Open the Umbrel dashboard");
